@@ -1,6 +1,18 @@
 #include <stdio.h>
 #define TAM_TABULEIRO 10  // Tamanho do tabuleiro (10x10)
 #define TAM_NAVIO 3       // Tamanho fixo dos navios
+#define TAM_H 5           // Tamanho das matrizes de habilidade
+
+// Função para exibir qualquer matriz
+void exibirMatriz(int matriz[TAM_H][TAM_H]) {
+    for(int i = 0; i < TAM_H; i++) {
+        for(int j = 0; j < TAM_H; j++) {
+            printf("%d ", matriz[i][j]);
+        }
+        printf("\n");
+    }
+    printf("\n");
+}
 
 int main() {
     int tabuleiro[TAM_TABULEIRO][TAM_TABULEIRO] = {0}; // Inicializa tabuleiro com 0 (água)
@@ -71,5 +83,43 @@ int main() {
         }
         printf("\n");
     }
+    printf("\n");
+        
+    // Habilidades Especiais
+    int cone[TAM_H][TAM_H] = {0};
+    int cruz[TAM_H][TAM_H] = {0};
+    int octaedro[TAM_H][TAM_H] = {0};
+    int centro = TAM_H / 2;
+
+    // Cone
+    for(int i=0; i<TAM_H; i++){
+        for(int j=centro-i; j<=centro+i; j++){
+            if(j>=0 && j<TAM_H){
+                cone[i][j]=1;
+            }
+        }
+    }
+
+    // Cruz
+    for(int i=0; i<TAM_H; i++){
+        cruz[centro][i] = 1; // Linha central
+        cruz[i][centro] = 1; // Coluna central
+    }
+
+    // Octaedro
+    octaedro[0][2] = 1;
+    octaedro[1][1] = 1; octaedro[1][2] = 1; octaedro[1][3] = 1;
+    octaedro[2][2] = 1;
+
+    // ---------------- Exibição das habilidades ----------------
+    printf("Habilidade Cone:\n");
+    exibirMatriz(cone);
+
+    printf("Habilidade Cruz:\n");
+    exibirMatriz(cruz);
+
+    printf("Habilidade Octaedro:\n");
+    exibirMatriz(octaedro);
+    
     return 0;
 }
